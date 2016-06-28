@@ -5,28 +5,35 @@
     <title>Welcome to Busmall's Market Research Page!</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
   </head>
   <body>
     <header>
-      <h1>Welcome to BusMall.com!</h1>
-      <h4>Home of your premium shopping experience on wheels.</h4>
+      <div class="inner_header">
+        <h1>Welcome to BusMall.com!</h1>
+        <p>Home of your premium shopping experience on wheels.</p>
+      </div>
     </header>
     <main>
       <section>
         <h2>Welcome to BusMall.com's Market Research Page</h2>
-        <p>Below you'll find yadda yadda</p>
+        <p>Below you'll find a fantastic selection of items we hope you'll love as much as we do.  But you can't take them all home, from each set of items we show you please select the product you'd be most interested in buying.  Thanks for you input!</p>
       </section>
       <section>
-        <!-- In this ul will live my 3 pictures -->
-        <ul class="img_container">
-          <li><img class="img_one"></li>
-          <li><img class="img_two"></li>
-          <li><img class="img_three"></li>
+        <ul id="img_container">
+          <li><img id="img_one" src=""></li>
+          <li><img id="img_two" src=""></li>
+          <li class="last_li"><img id="img_three" src =""></li>
         </ul>
+        <button id="chart_button">Click this button for a COOL CHART!</button>
+        <canvas id="chart_here" width="900px" height="500px"></canvas>
       </section>
     </main>
     <footer>
-      <h6>Copyright 2016 &copy; BusMall Inc., webmaster@busmall.com</h6>
+      <div class ="inner_footer">
+        <p>Copyright 2016 &copy; BusMall Inc., webmaster@busmall.com</p>
+      </div>
     </footer>
     <script src="js/app.js"></script>
     <script src="js/imageRunner.js"></script>

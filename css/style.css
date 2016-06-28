@@ -1,11 +1,107 @@
+
+/*style notes
+
+complementary colors
+darker blue: #0C516A
+light blue: #51D0FF
+medium blue: #2890B7
+darker orange: #6A3802
+light orange: #B77228
+
+new font color: #CE9023
+
+font-family: 'Fjalla One', sans-serif;
+font-family: 'Open Sans', sans-serif;
+*/
+/** {
+  outline: 3px dashed yellow;
+}*/
+
 body {
-  background: gray;
+  background: #51D0FF;
+  /*width: 960px;*/
+  margin: 0 auto;
 }
 
 header {
-  height: 100px;
+
+  color: #CE9023;
+  background: #0C516A;
+  height: 90px;
+}
+
+.inner_header {
+  width: 960px;
+  margin: 0 auto;
+}
+h1 {
+  padding-top: 15px;
+  padding-left: 15px;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 36px;
+}
+header p {
+  padding-left: 15px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+
+main {
+  font-family: 'Fjalla One', sans-serif;
+  width: 960px;
+  margin: 0 auto;
+}
+
+h2 {
+  padding-top: 30px;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 24px;
+}
+
+main p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+}
+
+ul {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+li {
+  display: inline-block;
+  text-align: center;
+  width: 300px;
+  margin-right: 26px;
+}
+
+.last_li {
+  margin-right: -4px;
+}
+
+#chart_button {
+  display: none;
+  margin: 30px auto;
+}
+
+#chart_here {
+  display: none;
+  margin: 30px auto;
 }
 
 footer {
-  height: 100px;
+  font-family: 'Fjalla One', sans-serif;
+  text-align: center;
+  background: #0C516A;
+  height: 90px;
+}
+
+.inner_footer {
+  width: 960px;
+  margin: 0 auto;
+}
+
+footer div p {
+  color: #CE9023;
+  font-size: 20px;
+  padding-top: 35px;
 }

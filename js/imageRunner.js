@@ -1,12 +1,20 @@
 'use strict';
+// this js file holds the image rotation and chart display scripts
 
-// this js file holds the image rotation script, every activation is called a run
-
-//Global variables.  I gave up on the global helper object, maybe later
+//global variables
 var numRuns = 0;
 var constructedImages = [];
 var thisRunRandoms = [21, 21, 21];
 var lastRunRandoms = [];
+var chartLabels = [];
+var chartData = [];
+
+var img_one = document.getElementById('img_one');
+var img_two = document.getElementById('img_two');
+var img_three = document.getElementById('img_three');
+var img_container = document.getElementById('img_container');
+var chart_here = document.getElementById('chart_here');
+var chart_button = document.getElementById('chart_button');
 
   // constructor function for image objects
 function ImageConstructor(imageName, imagePath, timesShown, clicks) {
@@ -29,7 +37,7 @@ new ImageConstructor('cthulhu', 'images/cthulhu.png', 0, 0);
 new ImageConstructor('dog-duck', 'images/dog-duck.png', 0, 0);
 new ImageConstructor('dragon', 'images/dragon.png', 0, 0);
 new ImageConstructor('pen', 'images/pen.png', 0, 0);
-new ImageConstructor('pet-sweet', 'images/pet-sweet.png', 0, 0);
+new ImageConstructor('pet-sweep', 'images/pet-sweep.png', 0, 0);
 new ImageConstructor('scissors', 'images/scissors.png', 0, 0);
 new ImageConstructor('shark', 'images/shark.png', 0, 0);
 new ImageConstructor('sweep', 'images/sweep.png', 0, 0);
@@ -67,19 +75,74 @@ var genThreeRandoms = function() {
   }
 };
 
-var img_one = document.getElementById('img_one');
-var img_two = document.getElementById('img_two');
-var img_three = document.getElementById('img_three');
-var img_container = document.getElementById('img_container');
+function displayImages() {
+  img_one.src = constructedImages[thisRunRandoms[0]].imagePath;
+  constructedImages[thisRunRandoms[0]].timesShown++;
+  img_two.src = constructedImages[thisRunRandoms[1]].imagePath;
+  constructedImages[thisRunRandoms[1]].timesShown++;
+  img_three.src = constructedImages[thisRunRandoms[2]].imagePath;
+  constructedImages[thisRunRandoms[2]].timesShown++;
+}
 
-img_container.addEventListener('click', doContainerStuff);
+function countClicks(localClickHolder) {
+  var splitOne = localClickHolder.split('images/')[1];
+  var splitTwo = splitOne.split('.')[0];
+  for(var i = 0; i < constructedImages.length; i++) {
+    if(splitTwo === constructedImages[i].imageName) {
+      constructedImages[i].clicks++;
+    }
+  }
+}
 
-function doContainerStuff(event) {
-  console.log(event.target.id);
-  event.target.id = x;
-  //
-  //I need to compare the target id IE: img_two to thisRunRandoms in order to figure out which Image's constructed object to increment on click
+function makeChartData() {
+  for(var i = 0; i < constructedImages.length; i++) {
+    chartData[i] = constructedImages[i].clicks;
+    chartLabels[i] = constructedImages[i].imageName;
+  }
+}
+
+var chartDataObject = {
+  labels: chartLabels,
+  datasets: [
+    {
+      data: chartData
+    }
+  ]
 };
 
-//call some functions here
-// genThreeRandoms();
+function drawChart() {
+  makeChartData();
+  var ctx = chart_here.getContext('2d');
+  var itemChart = new Chart(ctx, {
+    type: 'bar',
+    data: chartDataObject,
+    options: {
+      responsive: false
+    },
+  });
+}
+
+function doChartButtonStuff(event) {
+  chart_here.style.display = 'block';
+  drawChart();
+}
+
+function doContainerStuff(event) {
+  if(event.target.src) {
+    genThreeRandoms();
+    displayImages();
+    numRuns++;
+    countClicks(event.target.src);
+  }
+  if(numRuns > 2) {
+    img_container.removeEventListener('click', doContainerStuff);
+    document.getElementById('chart_button').style.display = 'block';
+  }
+};
+
+img_container.addEventListener('click', doContainerStuff);
+chart_button.addEventListener('click', doChartButtonStuff);
+
+//call functions here
+genThreeRandoms();
+displayImages();
