@@ -1,11 +1,13 @@
 'use strict';
 // this js file holds the image rotation and chart display scripts
 
-//Global variables.  I gave up on the global helper object, maybe later
+//global variables
 var numRuns = 0;
 var constructedImages = [];
 var thisRunRandoms = [21, 21, 21];
 var lastRunRandoms = [];
+var chartLabels = [];
+var chartData = [];
 
 var img_one = document.getElementById('img_one');
 var img_two = document.getElementById('img_two');
@@ -13,9 +15,6 @@ var img_three = document.getElementById('img_three');
 var img_container = document.getElementById('img_container');
 var chart_here = document.getElementById('chart_here');
 var chart_button = document.getElementById('chart_button');
-
-var chartLabels = [];
-var chartData = [];
 
   // constructor function for image objects
 function ImageConstructor(imageName, imagePath, timesShown, clicks) {
@@ -95,8 +94,6 @@ function countClicks(localClickHolder) {
   }
 }
 
-//this makes the chart vars for the drawChart function below
-
 function makeChartData() {
   for(var i = 0; i < constructedImages.length; i++) {
     chartData[i] = constructedImages[i].clicks;
@@ -122,19 +119,8 @@ function drawChart() {
     options: {
       responsive: false
     },
-    // scales: {
-    //   yAxes: [{
-    //     ticks: {
-    //       beginAtZero: true,
-    //     }
-    //   }]
-    // }
   });
 }
-
-// function hideChart() {
-//   document.getElementById('funky-chart').hidden = true;
-// }
 
 function doChartButtonStuff(event) {
   chart_here.style.display = 'block';
@@ -142,10 +128,10 @@ function doChartButtonStuff(event) {
 }
 
 function doContainerStuff(event) {
-  numRuns++;
-  genThreeRandoms();
-  displayImages();
   if(event.target.src) {
+    genThreeRandoms();
+    displayImages();
+    numRuns++;
     countClicks(event.target.src);
   }
   if(numRuns > 2) {
