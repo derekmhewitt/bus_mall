@@ -1,12 +1,21 @@
 'use strict';
-
-// this js file holds the image rotation script, every activation is called a run
+// this js file holds the image rotation and chart display scripts
 
 //Global variables.  I gave up on the global helper object, maybe later
 var numRuns = 0;
 var constructedImages = [];
 var thisRunRandoms = [21, 21, 21];
 var lastRunRandoms = [];
+
+var img_one = document.getElementById('img_one');
+var img_two = document.getElementById('img_two');
+var img_three = document.getElementById('img_three');
+var img_container = document.getElementById('img_container');
+var chart_here = document.getElementById('chart_here');
+var chart_button = document.getElementById('chart_button');
+
+var chartLabels = [];
+var chartData = [];
 
   // constructor function for image objects
 function ImageConstructor(imageName, imagePath, timesShown, clicks) {
@@ -67,13 +76,6 @@ var genThreeRandoms = function() {
   }
 };
 
-var img_one = document.getElementById('img_one');
-var img_two = document.getElementById('img_two');
-var img_three = document.getElementById('img_three');
-var img_container = document.getElementById('img_container');
-
-img_container.addEventListener('click', doContainerStuff);
-
 function displayImages() {
   img_one.src = constructedImages[thisRunRandoms[0]].imagePath;
   constructedImages[thisRunRandoms[0]].timesShown++;
@@ -93,9 +95,50 @@ function countClicks(localClickHolder) {
   }
 }
 
-function chartButton() {
-  var chart_here = document.getElementById('chart_here');
-  //reveal the chart element and fill in the data
+//this makes the chart vars for the drawChart function below
+
+function makeChartData() {
+  for(var i = 0; i < constructedImages.length; i++) {
+    chartData[i] = constructedImages[i].clicks;
+    chartLabels[i] = constructedImages[i].imageName;
+  }
+}
+
+var chartDataObject = {
+  labels: chartLabels,
+  datasets: [
+    {
+      data: chartData
+    }
+  ]
+};
+
+function drawChart() {
+  makeChartData();
+  var ctx = chart_here.getContext('2d');
+  var itemChart = new Chart(ctx, {
+    type: 'bar',
+    data: chartDataObject,
+    options: {
+      responsive: false
+    },
+    // scales: {
+    //   yAxes: [{
+    //     ticks: {
+    //       beginAtZero: true,
+    //     }
+    //   }]
+    // }
+  });
+}
+
+// function hideChart() {
+//   document.getElementById('funky-chart').hidden = true;
+// }
+
+function doChartButtonStuff(event) {
+  chart_here.style.display = 'block';
+  drawChart();
 }
 
 function doContainerStuff(event) {
@@ -107,9 +150,12 @@ function doContainerStuff(event) {
   }
   if(numRuns > 2) {
     img_container.removeEventListener('click', doContainerStuff);
-    document.getElementById('show_chart_button').style.display = 'block';
+    document.getElementById('chart_button').style.display = 'block';
   }
 };
+
+img_container.addEventListener('click', doContainerStuff);
+chart_button.addEventListener('click', doChartButtonStuff);
 
 //call functions here
 genThreeRandoms();
