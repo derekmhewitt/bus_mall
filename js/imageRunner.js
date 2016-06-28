@@ -29,7 +29,7 @@ new ImageConstructor('cthulhu', 'images/cthulhu.png', 0, 0);
 new ImageConstructor('dog-duck', 'images/dog-duck.png', 0, 0);
 new ImageConstructor('dragon', 'images/dragon.png', 0, 0);
 new ImageConstructor('pen', 'images/pen.png', 0, 0);
-new ImageConstructor('pet-sweet', 'images/pet-sweet.png', 0, 0);
+new ImageConstructor('pet-sweep', 'images/pet-sweep.png', 0, 0);
 new ImageConstructor('scissors', 'images/scissors.png', 0, 0);
 new ImageConstructor('shark', 'images/shark.png', 0, 0);
 new ImageConstructor('sweep', 'images/sweep.png', 0, 0);
@@ -74,12 +74,17 @@ var img_container = document.getElementById('img_container');
 
 img_container.addEventListener('click', doContainerStuff);
 
+function displayImages() {
+  img_one.src = constructedImages[thisRunRandoms[0]].imagePath;
+  img_two.src = constructedImages[thisRunRandoms[1]].imagePath;
+  img_three.src = constructedImages[thisRunRandoms[2]].imagePath;
+  //increment clicks here
+}
+
 function doContainerStuff(event) {
-  console.log(event.target.id);
-  event.target.id = x;
-  //
-  //I need to compare the target id IE: img_two to thisRunRandoms in order to figure out which Image's constructed object to increment on click
+  genThreeRandoms();
+  //handle incrementing click attribute
 };
 
-//call some functions here
-// genThreeRandoms();
+//call functions here
+displayImages();
