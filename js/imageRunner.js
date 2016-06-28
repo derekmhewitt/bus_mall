@@ -2,43 +2,84 @@
 
 // this js file holds the image rotation script, every activation is called a run
 
-//this little guy is a global helper and he's going to hold a bunch of my stuff for me so my js doesn't get too cluttered
+//Global variables.  I gave up on the global helper object, maybe later
+var numRuns = 0;
+var constructedImages = [];
+var thisRunRandoms = [21, 21, 21];
+var lastRunRandoms = [];
 
-//constructor function for image objects
-
-var globalHelper = {
-  numRuns: 0,
-  constructedImages: [],
-  thisRunRandoms: [],
-  lastRunRandoms: [],
-  // unconstructedImages: [] this empty array goes with the prototype funciton for automaticly running the images through the constructor function with a for loop.  It's disabled for now and will probably remain so for a while
-};
-
+  // constructor function for image objects
 function ImageConstructor(imageName, imagePath, timesShown, clicks) {
   this.imageName = imageName;
   this.imagePath = imagePath;
   this.timesShown = timesShown;
   this.clicks = clicks;
-  globalHelper.constructedImages.push(this);
+  constructedImages.push(this);
 };
 
 //create image objects here by calling constructor
 new ImageConstructor('bag', 'images/bag.png', 0, 0);
 new ImageConstructor('banana', 'images/banana.png', 0, 0);
 new ImageConstructor('bathroom', 'images/bathroom.png', 0, 0);
+new ImageConstructor('boots', 'images/boots.png', 0, 0);
+new ImageConstructor('breakfast', 'images/breakfast.png', 0, 0);
+new ImageConstructor('bubblegum', 'images/bubblegum.png', 0, 0);
+new ImageConstructor('chair', 'images/chair.png', 0, 0);
+new ImageConstructor('cthulhu', 'images/cthulhu.png', 0, 0);
+new ImageConstructor('dog-duck', 'images/dog-duck.png', 0, 0);
+new ImageConstructor('dragon', 'images/dragon.png', 0, 0);
+new ImageConstructor('pen', 'images/pen.png', 0, 0);
+new ImageConstructor('pet-sweet', 'images/pet-sweet.png', 0, 0);
+new ImageConstructor('scissors', 'images/scissors.png', 0, 0);
+new ImageConstructor('shark', 'images/shark.png', 0, 0);
+new ImageConstructor('sweep', 'images/sweep.png', 0, 0);
+new ImageConstructor('tauntaun', 'images/tauntaun.png', 0, 0);
+new ImageConstructor('unicorn', 'images/unicorn.png', 0, 0);
+new ImageConstructor('usb', 'images/usb.png', 0, 0);
+new ImageConstructor('water-can', 'images/water-can.png', 0, 0);
+new ImageConstructor('wine-glass', 'images/wine-glass.png', 0, 0);
 
-//maybe come back to this, it's a good idea but too complicated to get barely working
-// globalHelper.prototype.generateImageObjects = function() {
-//   for(var i = 0; i < globalHelper.unconstructedImages.length; i++) {
-//     ImageConstructor(globalHelper.unconstructedImages[i]);
-//   }
-// };
+var generateRandomNumber = function() {
+  return Math.floor(Math.random() * (constructedImages.length));
+};
 
-// Math.random() * 20 = blah
-// check against thisRunRandoms and lastRunRandoms
-// store thisRunRandoms in lastRunRandoms
-// load thisRunRandoms with 3 new random #\'s
+var genThreeRandoms = function() {
+  var rolls = 0;
+  lastRunRandoms = thisRunRandoms;
+  thisRunRandoms = [];
+  while(rolls < 3) {
+    var notDuplicate = true;
+    var newRoll = generateRandomNumber();
+    for(var m = 0; m < 3; m++) {
+      if(thisRunRandoms[m] === newRoll) {
+        notDuplicate = false;
+        break;
+      }
+      else if(lastRunRandoms[m] === newRoll) {
+        notDuplicate = false;
+        break;
+      }
+    }
+    if(notDuplicate) {
+      rolls++;
+      thisRunRandoms.push(newRoll);
+    }
+  }
+};
 
-// globalHelper.prototype.generateRandomNumbers = function() {
-//   Math.floor(Math.random() * (globalHelper.unconstructedImages.length - 0 + 1) + 0);
-// };
+var img_one = document.getElementById('img_one');
+var img_two = document.getElementById('img_two');
+var img_three = document.getElementById('img_three');
+var img_container = document.getElementById('img_container');
+
+img_container.addEventListener('click', doContainerStuff);
+
+function doContainerStuff(event) {
+  console.log(event.target.id);
+  event.target.id = x;
+  //
+  //I need to compare the target id IE: img_two to thisRunRandoms in order to figure out which Image's constructed object to increment on click
+};
+
+//call some functions here
+// genThreeRandoms();
