@@ -76,15 +76,41 @@ img_container.addEventListener('click', doContainerStuff);
 
 function displayImages() {
   img_one.src = constructedImages[thisRunRandoms[0]].imagePath;
+  constructedImages[thisRunRandoms[0]].timesShown++;
   img_two.src = constructedImages[thisRunRandoms[1]].imagePath;
+  constructedImages[thisRunRandoms[1]].timesShown++;
   img_three.src = constructedImages[thisRunRandoms[2]].imagePath;
-  //increment clicks here
+  constructedImages[thisRunRandoms[2]].timesShown++;
+}
+
+function countClicks(localClickHolder) {
+  var splitOne = localClickHolder.split('images/')[1];
+  var splitTwo = splitOne.split('.')[0];
+  for(var i = 0; i < constructedImages.length; i++) {
+    if(splitTwo === constructedImages[i].imageName) {
+      constructedImages[i].clicks++;
+    }
+  }
+}
+
+function chartButton() {
+  var chart_here = document.getElementById('chart_here');
+  //reveal the chart element and fill in the data
 }
 
 function doContainerStuff(event) {
+  numRuns++;
   genThreeRandoms();
-  //handle incrementing click attribute
+  displayImages();
+  if(event.target.src) {
+    countClicks(event.target.src);
+  }
+  if(numRuns > 2) {
+    img_container.removeEventListener('click', doContainerStuff);
+    document.getElementById('show_chart_button').style.display = 'block';
+  }
 };
 
 //call functions here
+genThreeRandoms();
 displayImages();

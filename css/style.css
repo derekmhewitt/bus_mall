@@ -9,3 +9,21 @@ header {
 footer {
   height: 100px;
 }
+
+li {
+  display: inline-block;
+  width: 300px;
+  background: white;
+}
+
+li img {
+  margin: 0 auto;
+}
+
+#show_chart_button {
+  display: none;
+}
+
+#chart_here {
+  display: none;
+}
