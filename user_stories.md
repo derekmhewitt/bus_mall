@@ -7,6 +7,7 @@
 
 ###Site Users
 - As a site user, I want to use a fast, responsive site free of popups.
+- As a site user, I want the site to be easy to navigate with clear menus and easy access to information.  
 - As a site user, I want the meaning of UI elements to be unambiguous.
 
 ###Marketing Drones

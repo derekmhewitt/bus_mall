@@ -7,7 +7,9 @@ var constructedImages = [];
 var thisRunRandoms = [21, 21, 21];
 var lastRunRandoms = [];
 var chartLabels = [];
-var chartData = [];
+var chartDataClicks = [];
+var chartDataShows = [];
+var chartDataPercent = [];
 
 var img_one = document.getElementById('img_one');
 var img_two = document.getElementById('img_two');
@@ -47,6 +49,22 @@ new ImageConstructor('usb', 'images/usb.png', 0, 0);
 new ImageConstructor('water-can', 'images/water-can.png', 0, 0);
 new ImageConstructor('wine-glass', 'images/wine-glass.png', 0, 0);
 
+//Check for previous local storage - pull it in if it exists, otherwise set var to mark that local storage will exist in the future
+var checkAndProcessLocalStorage = function() {
+  chartDataClicks = JSON.parse(localStorage.getItem('chartDataClicks'));
+  if(!chartDataClicks) {
+    chartDataClicks = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  }
+  chartDataShows = JSON.parse(localStorage.getItem('chartDataShows'));
+  if(!chartDataShows) {
+    chartDataShows = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  }
+  chartDataPercent = JSON.parse(localStorage.getItem('chartDataPercent'));
+  if(!chartDataPercent) {
+    chartDataPercent = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  }
+};
+
 var generateRandomNumber = function() {
   return Math.floor(Math.random() * (constructedImages.length));
 };
@@ -82,6 +100,7 @@ function displayImages() {
   constructedImages[thisRunRandoms[1]].timesShown++;
   img_three.src = constructedImages[thisRunRandoms[2]].imagePath;
   constructedImages[thisRunRandoms[2]].timesShown++;
+  makeChartData();
 }
 
 function countClicks(localClickHolder) {
@@ -92,26 +111,60 @@ function countClicks(localClickHolder) {
       constructedImages[i].clicks++;
     }
   }
+  makeChartData();
 }
 
 function makeChartData() {
   for(var i = 0; i < constructedImages.length; i++) {
-    chartData[i] = constructedImages[i].clicks;
     chartLabels[i] = constructedImages[i].imageName;
+    chartDataClicks[i] += constructedImages[i].clicks;
+    constructedImages[i].clicks = 0;
+    chartDataShows[i] += constructedImages[i].timesShown;
+    constructedImages[i].timesShown = 0;
+    if(chartDataShows[i] === 0 || chartDataClicks[i] === 0) {
+      chartDataPercent[i] = 0;
+    } else {
+      chartDataPercent[i] = Math.floor((chartDataClicks[i] / chartDataShows[i]) * 100);
+    }
   }
+  localStorage.setItem('chartDataClicks', JSON.stringify(chartDataClicks));
+  localStorage.setItem('chartDataShows', JSON.stringify(chartDataShows));
+  localStorage.setItem('chartDataPercent', JSON.stringify(chartDataPercent));
 }
 
-var chartDataObject = {
-  labels: chartLabels,
-  datasets: [
-    {
-      data: chartData
-    }
-  ]
-};
-
 function drawChart() {
-  makeChartData();
+  var chartDataObject = {
+    labels: chartLabels,
+    datasets: [
+      {
+        label: 'Clicks',
+        backgroundColor: '#CE9023',
+        data: chartDataClicks,
+        options: {
+          beginAtZero: true,
+          animateScale: true,
+        }
+      },
+      {
+        label: 'Times Shown',
+        backgroundColor: '#CE9023',
+        data: chartDataShows,
+        options: {
+          beginAtZero: true,
+          animateScale: true,
+        }
+      },
+      {
+        label: 'Percentage',
+        backgroundColor: '#CE9023',
+        data: chartDataPercent,
+        options: {
+          beginAtZero: true,
+          animateScale: true,
+        }
+      }
+    ]
+  };
   var ctx = chart_here.getContext('2d');
   var itemChart = new Chart(ctx, {
     type: 'bar',
@@ -123,8 +176,8 @@ function drawChart() {
 }
 
 function doChartButtonStuff(event) {
-  chart_here.style.display = 'block';
   drawChart();
+  chart_here.style.display = 'block';
 }
 
 function doContainerStuff(event) {
@@ -134,7 +187,7 @@ function doContainerStuff(event) {
     numRuns++;
     countClicks(event.target.src);
   }
-  if(numRuns > 2) {
+  if(numRuns > 24) {
     img_container.removeEventListener('click', doContainerStuff);
     document.getElementById('chart_button').style.display = 'block';
   }
@@ -144,5 +197,6 @@ img_container.addEventListener('click', doContainerStuff);
 chart_button.addEventListener('click', doChartButtonStuff);
 
 //call functions here
+checkAndProcessLocalStorage();
 genThreeRandoms();
 displayImages();

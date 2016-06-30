@@ -1,7 +1,19 @@
 # bus_mall
 CodeFellows 201 Bus Mall Project, Week 3
 
+---
+Generic Branch Activity Log
 
+derek3
+Added use of localStorage for persistent chart data.  Set up additional bars on graphs and did minor styling.  
+
+derek2
+Finished mvp build for day 11, implemented event listeners, chart and all supporting js code.  Basic css styling.
+
+derek1
+Filled in general structure, got hung up on genThreeRandoms js function but finally got it figured out.
+
+---
 Credit for Reset Style Sheet:
 http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -19,3 +31,6 @@ http://www.webdesignerdepot.com/2013/11/easily-create-stunning-animated-charts-w
 
 Help also from Chart.js docs:
 http://www.chartjs.org/docs/
+
+Fonts from:
+https://fonts.google.com/specimen/Fjalla+One
