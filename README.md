@@ -5,7 +5,7 @@ CodeFellows 201 Bus Mall Project, Week 3
 Generic Branch Activity Log
 
 derek3
-Added use of localStorage for persistent chart data.  
+Added use of localStorage for persistent chart data.  Set up additional bars on graphs and did minor styling.  
 
 derek2
 Finished mvp build for day 11, implemented event listeners, chart and all supporting js code.  Basic css styling.

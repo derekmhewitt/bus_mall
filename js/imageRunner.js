@@ -187,7 +187,7 @@ function doContainerStuff(event) {
     numRuns++;
     countClicks(event.target.src);
   }
-  if(numRuns > 2) {
+  if(numRuns > 24) {
     img_container.removeEventListener('click', doContainerStuff);
     document.getElementById('chart_button').style.display = 'block';
   }
